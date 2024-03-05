@@ -1,0 +1,2 @@
+nshareg:root:admin
+hakob:banakum:user:2000
