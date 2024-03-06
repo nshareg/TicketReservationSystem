@@ -8,7 +8,7 @@ import java.util.*;
 
  */
 public class FileInteract {
-    public static boolean ifLogin(String username, String password){//boolean for logging in into the system
+    public static boolean ifLogin(String username, String password){//boolean only for info regarding login info, so filename is fixed
         try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
             String rows;
             while ((rows = reader.readLine()) != null) {//loops until the last row
@@ -24,12 +24,12 @@ public class FileInteract {
         }
         return false;//returns false otherwise
     }
-    public static boolean ifUserExists(String username){//boolean method for determining does the user exists
-        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
+    public static boolean ifUserExists(String key, String filename){//boolean method for determining does the row with some firs key name exists
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {//reads the file
             String rows;
             while ((rows = reader.readLine()) != null) {//loops until the last row
                 String[] row = rows.split(":");//splits row by ":"
-                if (row[0].equals(username)) {
+                if (row[0].equals(key)) {
                     return true; // if matched returns true
                 }
             }
@@ -38,19 +38,19 @@ public class FileInteract {
         }
         return false;//returns false otherwise
     }
-    public static void setAccount(String username, String password) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("passdb.txt", true))) {
-            writer.write(username); // Write the username
+    public static void setRow(String var1, String var2, String filename) {//method for setting new row of information
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+            writer.write(var1); // Write the username
             writer.write(":"); // Delimiter
-            writer.write(password); // Write the password
+            writer.write(var2); // Write the password
             writer.write("\n"); // New line
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void setNewPart(String username, String val){//method for finding the right row and adding new part
+    public static void setNewPart(String key, String val, String filename){//method for finding the right row and adding new part
         ArrayList<String> list = new ArrayList<>();//create object of class arraylist
-        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//opens the file
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {//opens the file
             String row;
             while ((row = reader.readLine()) != null) {//loop for adding row to array list
                 list.add(row);
@@ -62,13 +62,13 @@ public class FileInteract {
         for (int i = 0; i < list.size(); i++) {//loop for searching desirable row and adding the part we need
             String line = list.get(i);
             String[] credentials = line.split(":");//splitting the line into parts
-            if (credentials[0].equals(username)) {//choosing first part(username) and comparing with instance we have
+            if (credentials[0].equals(key)) {//choosing first part(username) and comparing with instance we have
                 list.set(i, line + ":" + val);//if they matched adding our new part
                 break;//breaking the loop
             }
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("passdb.txt"))) {//copying the rows from arraylist into our blanked file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {//copying the rows from arraylist into our blanked file
             for (int i = 0; i < list.size(); i++) {
                 writer.write(list.get(i));//adding the row
                 writer.newLine();//going to the next row
@@ -77,36 +77,36 @@ public class FileInteract {
             e.printStackTrace();
         }
     }
-    public static String getRow(String username){//method which returns the whole row by username
-        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {// reads the file
+    public static String getRow(String key, String filename){//method which returns the whole row by search key
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {// reads the file
             String rows;
             while ((rows = reader.readLine()) != null) {//goes until last row
                 String[] credentials = rows.split(":");//splits our row for future comparing
-                if(credentials[0].equals(username)) return rows;//if matched returns row
+                if(credentials[0].equals(key)) return rows;//if matched returns row
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
     }
-    public static String getCred(String username, int position){//method which returns info about user with the username
-        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {
+    public static String getCred(String key, int position, String filename){//method which returns info from row regarding it's position
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String rows;
             while ((rows = reader.readLine()) != null) {//loops until the end of the file
                 String[] credentials = rows.split(":");//splits our row
-                if(credentials[0].equals(username)) return credentials[position];//if matched returns the needed  element of the array, which is the role
+                if(credentials[0].equals(key)) return credentials[position];//if matched returns the needed  element of the array, which is the role
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
     }
-    public static int getLength(String username){//returns number of elements
-        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
+    public static int getLength(String key, String filename){//returns number of elements in a row
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {//reads the file
             String rows;
             while ((rows = reader.readLine()) != null) {//loops until the last row
                 String[] row = rows.split(":");//splits row by ":"
-                if (row[0].equals(username)) {//if matched
+                if (row[0].equals(key)) {//if matched
                     return row.length;//return length of the array, which is filled by the separated elements
                 }
             }
