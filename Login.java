@@ -4,11 +4,11 @@ import java.util.*;
      IMPORTANT NOTE
      here the row elements are separated with ":"'s, when first element is username, second is password,
      third one is role of the user, which can be admin or user
-     also if it exists we have balance, in the 4th part
+     also if it exists we have balance, in the 3th part
 
  */
 public class Login {
-    public static boolean readLoginInfo(String username, String password){//boolean for searching if we have login and password in our file.
+    public static boolean ifLogin(String username, String password){//boolean for logging in into the system
         try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
             String rows;
             while ((rows = reader.readLine()) != null) {//loops until the last row
@@ -24,17 +24,31 @@ public class Login {
         }
         return false;//returns false otherwise
     }
-    public static void setLoginInfo(String username, String password){//method for writing new credentials
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("passdb.txt"))) {//opens the file
-            writer.write(username);//writes the username
-            writer.write(":");//adds delimiter
-            writer.write(password);//writes the password
-
+    public static boolean ifUserExists(String username){//boolean method for determining does the user exists
+        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
+            String rows;
+            while ((rows = reader.readLine()) != null) {//loops until the last row
+                String[] row = rows.split(":");//splits row by ":"
+                if (row[0].equals(username)) {
+                    return true; // if matched returns true
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;//returns false otherwise
+    }
+    public static void setAccount(String username, String password) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("passdb.txt", true))) {
+            writer.write(username); // Write the username
+            writer.write(":"); // Delimiter
+            writer.write(password); // Write the password
+            writer.write("\n"); // New line
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void setInfo(String username, String val){//method for finding the right row and adding new part
+    public static void setNewPart(String username, String val){//method for finding the right row and adding new part
         ArrayList<String> list = new ArrayList<>();//create object of class arraylist
         try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//opens the file
             String row;
@@ -73,31 +87,33 @@ public class Login {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "error";//prints error otherwise
+        return "";
     }
-    public static String getRole(String username){//method which returns the role of the username, all the same as in the previous method, with changes in only commented places
+    public static String getCred(String username, int position){//method which returns info about user with the username
         try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {
             String rows;
-            while ((rows = reader.readLine()) != null) {
-                String[] credentials = rows.split(":");
-                if(credentials[0].equals(username)) return credentials[2];//if matched returns third element of the array, which is the role
+            while ((rows = reader.readLine()) != null) {//loops until the end of the file
+                String[] credentials = rows.split(":");//splits our row
+                if(credentials[0].equals(username)) return credentials[position];//if matched returns the needed  element of the array, which is the role
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "error";
+        return "";
     }
-    public static String getBalance(String username){//method for getting the balance and all the same is in previous ones
-        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {
+    public static int getLength(String username){//returns number of elements
+        try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
             String rows;
-            while ((rows = reader.readLine()) != null) {
-                String[] credentials = rows.split(":");
-                if(credentials[0].equals(username)) return credentials[3];
+            while ((rows = reader.readLine()) != null) {//loops until the last row
+                String[] row = rows.split(":");//splits row by ":"
+                if (row[0].equals(username)) {//if matched
+                    return row.length;//return length of the array, which is filled by the separated elements
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "error";
+        return 0;
     }
 }
 
