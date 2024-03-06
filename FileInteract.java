@@ -7,7 +7,7 @@ import java.util.*;
      also if it exists we have balance, in the 3th part
 
  */
-public class Login {
+public class FileInteract {
     public static boolean ifLogin(String username, String password){//boolean for logging in into the system
         try (BufferedReader reader = new BufferedReader(new FileReader("passdb.txt"))) {//reads the file
             String rows;
