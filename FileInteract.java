@@ -4,7 +4,7 @@ import java.util.*;
      IMPORTANT NOTE
      here the row elements are separated with ":"'s, when first element is username, second is password,
      third one is role of the user, which can be admin or user
-     also if it exists we have balance, in the 3th part
+     also if it exists we have balance, in the 4th part
 
  */
 public class FileInteract {
