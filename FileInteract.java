@@ -77,6 +77,17 @@ public class FileInteract {
             e.printStackTrace();
         }
     }
+    public static void changePart(String key, String val, int pos, String filename){//method for finding and changing some instance in the row
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String rows;
+            while ((rows = reader.readLine()) != null) {//loops until the end of the file
+                String[] credentials = rows.split(":");//splits our row
+                if(credentials[0].equals(key)) credentials[pos] = val;//if matched, equals our array's desirable part to our new value
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static String getRow(int key, String filename){//method which returns the whole row by search key
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String rows;
@@ -118,7 +129,6 @@ public class FileInteract {
         }
         return 0;
     }
-
     public static int getRowNum(String filename){//method which returns number of users in db
         int num = 1;
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {//reads the file
