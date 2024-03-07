@@ -1,27 +1,18 @@
 public class User extends SuperUser{
-    private int balance;
-    public User(String name, String surname, int balance){
-        setName(name);
-        setSurname(surname);
+    private String balance;
+    public User(String username, String password){
+        setCreds(username, password);
+        setBalance("0");
+    }
+    public User(String username, String password, String balance){
+        setCreds(username, password);
         setBalance(balance);
     }
-    public User(String name, String surname, String username){
-        setName(name);
-        setSurname(surname);
-        setUsername(username);
+    public void setBalance(String balance){
+        if(FileInteract.getLength(getUsername(),DB_NAME) <= 3) FileInteract.setNewPart(getUsername(), balance, DB_NAME);
+        else FileInteract.changePart(getUsername(), balance, 3, DB_NAME);
     }
-    public User(String username){
-        setUsername(username);
-    }
-    public User(String username, int balance){
-        setUsername(username);
-        setBalance(balance);
-    }
-    public void setBalance(int balance){
-        if(balance >= 0) this.balance = balance;
-        else System.out.println("Please enter valid number");
-    }
-    public int getBalance(){
-        return this.balance;
+    public String getBalance(){
+        return FileInteract.getCred(getUsername(), 3, DB_NAME);
     }
 }
