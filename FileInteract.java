@@ -78,11 +78,28 @@ public class FileInteract {
         }
     }
     public static void changePart(String key, String val, int pos, String filename){//method for finding and changing some instance in the row
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String rows;
-            while ((rows = reader.readLine()) != null) {//loops until the end of the file
-                String[] credentials = rows.split(":");//splits our row
-                if(credentials[0].equals(key)) credentials[pos] = val;//if matched, equals our array's desirable part to our new value
+        ArrayList<String> list = new ArrayList<>();//create object of class arraylist
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {//opens the file
+            String row;
+            while ((row = reader.readLine()) != null) {//loop for adding row to array list
+                list.add(row);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < list.size(); i++){//loops until the end of list
+            String[] credentials = list.get(i).split(":");//splits every row
+            if(credentials[0].equals(key)){//if matched
+                credentials[pos] = val;//changes the value in our pos, with given value
+                list.set(i, String.join(":", credentials));//change the row with updated credentials array
+                break;
+            }
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {//copying the rows from arraylist into our blanked file
+            for (int i = 0; i < list.size(); i++) {
+                writer.write(list.get(i));//adding the row
+                writer.newLine();//going to the next row
             }
         } catch (IOException e) {
             e.printStackTrace();
