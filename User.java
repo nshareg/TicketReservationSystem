@@ -9,10 +9,12 @@ public class User extends SuperUser{
         setBalance(balance);
     }
     public void setBalance(String balance){
-        if(FileInteract.getLength(getUsername(),DB_NAME) <= 3) FileInteract.setNewPart(getUsername(), balance, DB_NAME);
-        else FileInteract.changePart(getUsername(), balance, 3, DB_NAME);
+        if(FileInteract.getLength(this.getUsername(),DB_NAME) <= 3 & !balance.equals(FileInteract.getCred(getUsername(), 3, DB_NAME))){
+            FileInteract.setNewPart(getUsername(), balance, DB_NAME);
+        }
+        this.balance = balance;
     }
     public String getBalance(){
-        return FileInteract.getCred(getUsername(), 3, DB_NAME);
+        return this.balance;
     }
 }
