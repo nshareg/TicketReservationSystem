@@ -125,7 +125,7 @@ public class FileInteract {
             String rows;
             while ((rows = reader.readLine()) != null) {//loops until the end of the file
                 String[] credentials = rows.split(":");//splits our row
-                if(credentials[0].equals(key)) return credentials[position];//if matched returns the needed  element of the array, which is the role
+                if(credentials[0].equals(key) && position <= getLength(key, filename)) return credentials[position];//if matched returns the needed  element of the array, which is the role
             }
         } catch (IOException e) {
             e.printStackTrace();
