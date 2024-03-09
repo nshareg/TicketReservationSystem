@@ -20,7 +20,7 @@ public class FileInteract {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         return false;//returns false otherwise
     }
@@ -34,7 +34,7 @@ public class FileInteract {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         return false;//returns false otherwise
     }
@@ -45,7 +45,7 @@ public class FileInteract {
             writer.write(var2); // Write the password
             writer.write("\n"); // New line
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
     }
     public static void setNewPart(String key, String val, String filename){//method for finding the right row and adding new part
@@ -56,7 +56,7 @@ public class FileInteract {
                 list.add(row);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
 
         for (int i = 0; i < list.size(); i++) {//loop for searching desirable row and adding the part we need
@@ -74,7 +74,7 @@ public class FileInteract {
                 writer.newLine();//going to the next row
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
     }
     public static void changePart(String key, String val, int pos, String filename){//method for finding and changing some instance in the row
@@ -85,7 +85,7 @@ public class FileInteract {
                 list.add(row);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         for(int i = 0; i < list.size(); i++){//loops until the end of list
             String[] credentials = list.get(i).split(":");//splits every row
@@ -102,7 +102,7 @@ public class FileInteract {
                 writer.newLine();//going to the next row
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
     }
     public static String getRow(int key, String filename){//method which returns the whole row by search key
@@ -116,7 +116,7 @@ public class FileInteract {
                 num++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         return "";
     }
@@ -128,7 +128,7 @@ public class FileInteract {
                 if(credentials[0].equals(key) && position <= getLength(key, filename)) return credentials[position];//if matched returns the needed  element of the array, which is the role
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         return "";
     }
@@ -142,7 +142,7 @@ public class FileInteract {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         return 0;
     }
@@ -154,7 +154,7 @@ public class FileInteract {
                 num++;//increments number of users
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.format("%s%n", e);
         }
         return num;
     }
