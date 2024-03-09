@@ -4,27 +4,27 @@ public class User extends SuperUser{
     public User(String username, String password){
         setCreds(username, password);//call of parent class method to set username and password
         setRole("user");//sets role user in any case
-        setBalance("");//since we need to call set balance method in any case, we call it with empty String
+        setBalance("");//since we need to initialize the balance in any case, we call the method with empty string
     }
     public User(String username, String password, String balance){
         setCreds(username, password);//sets username and password
         setRole("user");//sets role user in any case
         setBalance(balance);//sets balance to the value we got
     }
-    public void setBalance(String balance){//method for setting balance if its position is empty or initializing it from the database
-        if(balance.isEmpty()){//if balance is empty value, it simply sets our object instance variable to the value we have in db
-            this.balance = FileInteract.getCred(getUsername(),BALANCE_POSITION,DB_NAME);
+
+    public void setBalance(String balance) {
+        boolean state = balance.isEmpty();//check if obtained String is empty
+        if(FileInteract.getLength(getUsername(),DB_NAME) < 4){//if spot for balance is empty
+            FileInteract.setNewPart(getUsername(), state ? "0" : balance, DB_NAME);//depending on if obtained string is empty or not, we set 0 or the balance value
         }
-        else{//if the value is not empty executes part down below
-            if(FileInteract.getLength(this.getUsername(),DB_NAME) < 4){//if length is smaller than 4, that means the place dedicated for balance is empty
-                FileInteract.setNewPart(getUsername(), balance, DB_NAME);//adds part with our balance from the right
+        else {//if we already have value in our BALANCE_POSITION
+            if(!state){//if obtained string is non-empty we set new value on that place
+                FileInteract.changePart(getUsername(), balance, BALANCE_POSITION, DB_NAME);
             }
-            else{//if we already have the value in balance position
-                FileInteract.changePart(getUsername(),balance,BALANCE_POSITION,DB_NAME);//change balance with the String we got
-            }
-            this.balance = balance;//set object balance variable to the one we got
         }
+        this.balance = FileInteract.getCred(getUsername(),BALANCE_POSITION,DB_NAME);//set objects "balance" instance to the value recorded in db
     }
+
     public String getBalance(){//get method for balance
         return this.balance;
     }
