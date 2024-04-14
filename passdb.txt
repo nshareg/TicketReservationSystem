@@ -3,7 +3,7 @@ karen:qristine:user:3000
 hakob:areg:user:1990
 edgar:edgar123:user:1500
 vzgo:svaxchi:user:3000
-partez:partez:user:1000
+partez:partez:user:3000
 xatuba:xatuba:user:2000
 vlad:vlad:user:2000
 vacok:vacok:user:2999

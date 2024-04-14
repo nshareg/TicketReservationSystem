@@ -6,7 +6,7 @@ public class User {
     private String password;
     private boolean ifAdmin;
     private int balance;
-    private ArrayList<Activity> registeredGames;
+    private ArrayList<String> activities;
     public final String DB_NAME = "passdb.txt";
     public User(){}//empty constructor
 
@@ -19,7 +19,15 @@ public class User {
         this.password = password;
         setIfAdmin(role);
         setBalance(balance);
-        this.registeredGames = new ArrayList<Activity>(registeredGames);
+    }
+    public User(User user){
+        this.username = user.username;
+        this.password = user.password;
+        this.ifAdmin = user.ifAdmin;
+        this.balance = user.balance;
+    }
+    public void addActivity(String activity){
+       activities.add(activity);
     }
 
     public void setBalance(int balance){
@@ -37,6 +45,6 @@ public class User {
         if(role.equals("user")) this.ifAdmin = false;
     }
     public String toString(){
-        return username + " is a admin " + ifAdmin + balance;
+        return username + " is a admin " + ifAdmin +" "+ balance;
     }
 }
