@@ -10,10 +10,6 @@ public class User {
     public final String DB_NAME = "passdb.txt";
     public User(){}//empty constructor
 
-    //invalid user credentials exception
-    //add packages
-
-
     public User(String username, String password,String role, int balance){
         this.username = username;
         this.password = password;

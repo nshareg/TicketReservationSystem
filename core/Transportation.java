@@ -3,14 +3,14 @@ package core;
 public class Transportation extends Activity {
     private String mode;
     private int availableSeats;
-    private double lengthOfRoad;
+    private int lengthOfRoad;
     private int numberOfSections;
     private int vipPlaces;
     private int ordinaryPlaces;
 
-    public Transportation(String name, String location, double durationHours, String mode, double price, int numberOfSeats,
-                          int availableSeats, double lengthOfRoad,int numberOfSections, int vipPlaces, int ordinaryPlaces) {
-        super(name, location, durationHours, price, numberOfSeats);
+    public Transportation(String name, String location, Time startTime, String mode, int price, int numberOfSeats,
+                          int availableSeats, int lengthOfRoad, int numberOfSections, int vipPlaces, int ordinaryPlaces, Time endTime) {
+        super(name, location, startTime, endTime, price, numberOfSeats);
         this.mode = mode;
         this.availableSeats = availableSeats;
         this.lengthOfRoad = lengthOfRoad;
@@ -39,7 +39,7 @@ public class Transportation extends Activity {
         return lengthOfRoad;
     }
 
-    public void setLengthOfRoad(double lengthOfRoad) {
+    public void setLengthOfRoad(int lengthOfRoad) {
         this.lengthOfRoad = lengthOfRoad;
     }
 

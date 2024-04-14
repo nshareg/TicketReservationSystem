@@ -2,30 +2,62 @@ package core;
 public abstract class Activity {
     private String name;
     private String location;
-    private double durationHours;
-    //add starting time end time
-    private double price;
+    private core.Activity.Time startTime;
+    private core.Activity.Time endTime;
+    private int price;
     private int numberOfSeats;
-    private int availableSeats;
+    public static class Time {
+        private int hours;
+        private int minutes;
 
+        public Time(int hours, int minutes) {
+            this.hours = hours;
+            this.minutes = minutes;
+        }
 
+        public int getHours() {
+            return hours;
+        }
 
-    public Activity(String name, String location, double durationHours, double price, int numberOfSeats, int availableSeats) {
+        public void setHours(int hours) {
+            this.hours = hours;
+        }
+
+        public int getMinutes() {
+            return minutes;
+        }
+
+        public void setMinutes(int minutes) {
+            this.minutes = minutes;
+        }
+
+        @Override
+        public String toString() {
+            return hours + ":" + minutes;
+        }
+
+        @Override
+        public boolean equals(Object otherObject) {
+            if (otherObject == null)
+                return false;
+            else if (getClass() != otherObject.getClass())
+                return false;
+            else {
+                core.Activity.Time otherTime = (core.Activity.Time) otherObject;
+                return (hours == otherTime.hours)
+                        && (minutes == otherTime.minutes);
+            }
+        }
+    }
+    public Activity(String name, String location, core.Activity.Time startTime, core.Activity.Time endTime, int price, int numberOfSeats) {
         this.name = name;
         this.location = location;
-        this.durationHours = durationHours;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.price = price;
         this.numberOfSeats = numberOfSeats;
-        this.availableSeats = availableSeats;
     }
-    public Activity(String name, String location, double durationHours, double price, int numberOfSeats) {
-        this.name = name;
-        this.location = location;
-        this.durationHours = durationHours;
-        this.price = price;
-        this.numberOfSeats = numberOfSeats;
-        this.availableSeats = Integer.MAX_VALUE;
-    }
+
     public String getName() {
         return name;
     }
@@ -42,20 +74,28 @@ public abstract class Activity {
         this.location = location;
     }
 
-    public double getDurationHours() {
-        return durationHours;
+    public core.Activity.Time getStartTime() {
+        return new core.Activity.Time(startTime.hours, startTime.minutes);
     }
 
-    public void setDurationHours(int durationHours) {
-        this.durationHours = durationHours;
+    public void setStartTime(core.Activity.Time startTime) {
+        this.startTime = new core.Activity.Time(startTime.hours, startTime.minutes);
     }
 
-    public void setPrice(double price) {
+    public core.Activity.Time getEndTime() {
+        return new core.Activity.Time(endTime.hours, endTime.minutes);
+    }
+
+    public void setEndTime(core.Activity.Time endTime) {
+        this.endTime = new core.Activity.Time(endTime.hours, endTime.minutes);
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
         this.price = price;
-    }
-
-    public double getPrice() {
-        return this.price;
     }
 
     public int getNumberOfSeats() {
@@ -64,12 +104,5 @@ public abstract class Activity {
 
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
-    }
-    public void setAvailableSeats(int seats) {
-        this.availableSeats = seats;
-    }
-
-    public int getAvailableSeats() {
-        return this.availableSeats;
     }
 }
