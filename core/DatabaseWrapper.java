@@ -11,10 +11,10 @@ import java.util.*;
  */
 public class DatabaseWrapper {
     private ArrayList<User> users;
-    private ArrayList<core> activities;
+    private ArrayList<Activity> activities;
     public DatabaseWrapper(){
         users = new ArrayList<>();
-        activities = new ArrayList<core>();
+        activities = new ArrayList<Activity>();
     }
     public void fillUsers(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
