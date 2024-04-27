@@ -5,7 +5,6 @@ public abstract class Activity {
     private core.Activity.Time startTime;
     private core.Activity.Time endTime;
     private int price;
-    private int numberOfSeats;
     public static class Time {
         private int hours;
         private int minutes;
@@ -13,6 +12,11 @@ public abstract class Activity {
         public Time(int hours, int minutes) {
             this.hours = hours;
             this.minutes = minutes;
+        }
+        public Time(String time){
+            String[] timeSpllited = time.split(":");
+            this.hours = Integer.parseInt(timeSpllited[0]);
+            this.minutes = Integer.parseInt(timeSpllited[1]);
         }
 
         public int getHours() {
@@ -49,13 +53,12 @@ public abstract class Activity {
             }
         }
     }
-    public Activity(String name, String location, core.Activity.Time startTime, core.Activity.Time endTime, int price, int numberOfSeats) {
+    public Activity(String name, String location, core.Activity.Time startTime, core.Activity.Time endTime, int price) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
-        this.numberOfSeats = numberOfSeats;
     }
 
     public String getName() {
@@ -96,13 +99,5 @@ public abstract class Activity {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
     }
 }

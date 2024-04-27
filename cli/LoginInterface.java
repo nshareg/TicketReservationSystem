@@ -7,8 +7,7 @@ import core.User;
 public class LoginInterface {
     public void execute(){
         Scanner sc = new Scanner(System.in);
-        DatabaseWrapper db = new DatabaseWrapper();
-        db.fillUsers("passdb.txt");
+        DatabaseWrapper db = new DatabaseWrapper("passdb.txt","activitydb.txt");
         User cos = null;
         boolean logedIn = false;
         while(!logedIn){
@@ -23,6 +22,10 @@ public class LoginInterface {
             else{
                 System.out.println("Wrong login info");
             }
+        }
+        if(cos.getRole()){
+            System.out.println("Print information about activity");
+            db
         }
     }
 }

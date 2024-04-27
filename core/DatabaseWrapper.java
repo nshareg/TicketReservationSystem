@@ -11,12 +11,23 @@ import java.util.*;
  */
 public class DatabaseWrapper {
     private ArrayList<User> users;
-    private ArrayList<Activity> activities;
-    public DatabaseWrapper(){
+    private ArrayList<String> activities;
+    private String filenameOfUsers;
+    private String fileNameOfActivities;
+    public DatabaseWrapper(String filenameOfUsers, String fileNameOfActivities) {
+        try{
+        this.filenameOfUsers = filenameOfUsers;
+        this.fileNameOfActivities = fileNameOfActivities;
         users = new ArrayList<>();
-        activities = new ArrayList<Activity>();
+        activities = new ArrayList<>();
+        fillUsers(filenameOfUsers);
+        fillActivities(fileNameOfActivities);}
+        catch (IOException e) {
+            System.out.println("corrupted db of activites");
+            System.exit(0);
+        }
     }
-    public void fillUsers(String filename) {
+    private void fillUsers(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
             while ((row = reader.readLine()) != null) {
@@ -36,20 +47,13 @@ public class DatabaseWrapper {
     public void isValidUser(String[] arr) throws InvalidUserCredentials{
         if(arr.length < 4) throw new InvalidUserCredentials();
     }
-    public void fillActivities(String filename) {
+    public void fillActivities(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
             while ((row = reader.readLine()) != null) {
-                String[] elements = row.split("/");
-                switch (elements[0]){
-                    //case "amusement": activities.add(new Amusement());//empty for now than after deciding major design choices would be added respective variables
-                  //  case "game": activities.add(new Game());
-                  //  case "transportation": activities.add(new Transportation());
+                activities.add(row);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
-            System.err.format("Error reading file: %s%n", e);
-        }
     }
     public User getUser(String name){
         for(User user : users){
@@ -69,8 +73,26 @@ public class DatabaseWrapper {
         if(flag) return users.size();
         else return activities.size();
     }
-    public void close(String filename){
-        
+    public void addNewActivity(String name, String location, String price, String numberOfFreePlaces, String numberOfOccupiedPlaces, String startTime, String endTime){
+        String row = name + "/" + location + "/" + price + "/" + numberOfFreePlaces + "/" + numberOfOccupiedPlaces + "/" + startTime + "/" + endTime;
+        activities.add(row);
+    }
+    public void close(){
+        PrintWriter outputStream = null;
+        PrintWriter outputStream2 = null;
+        try {
+            outputStream = new PrintWriter(new FileOutputStream(filenameOfUsers));
+            outputStream2 = new PrintWriter(new FileOutputStream(fileNameOfActivities));
+            for(User user : users){
+                outputStream.println(user.toString());
+            }
+            for(String string : activities){
+                outputStream2.println(string);
+            }
+        } catch(FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
     }
 }
 

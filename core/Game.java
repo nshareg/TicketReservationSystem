@@ -8,9 +8,9 @@ public class Game extends Activity {
     private int ordinarySeats;
 
 
-    public Game(String name, String location, Time startTime,Time endTime, int price,
+    public Game(String name, String location, String startTime,String endTime, int price,
                 int numberOfSeats, int availableSeats, int vipSeats, int ordinarySeats) {
-        super(name, location, startTime, endTime, price, numberOfSeats);
+        super(name, location, new Time(startTime), new Time(endTime), price);
         this.vipSeats = vipSeats;
         this.ordinarySeats = ordinarySeats;
         this.availableSeats = availableSeats;

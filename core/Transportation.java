@@ -2,7 +2,6 @@ package core;
 
 public class Transportation extends Activity {
     private String mode;
-    private int availableSeats;
     private int lengthOfRoad;
     private int numberOfSections;
     private int vipPlaces;
@@ -10,9 +9,8 @@ public class Transportation extends Activity {
 
     public Transportation(String name, String location, Time startTime, String mode, int price, int numberOfSeats,
                           int availableSeats, int lengthOfRoad, int numberOfSections, int vipPlaces, int ordinaryPlaces, Time endTime) {
-        super(name, location, startTime, endTime, price, numberOfSeats);
+        super(name, location, startTime, endTime, price);
         this.mode = mode;
-        this.availableSeats = availableSeats;
         this.lengthOfRoad = lengthOfRoad;
         this.numberOfSections = numberOfSections;
         this.vipPlaces = vipPlaces;
@@ -27,13 +25,6 @@ public class Transportation extends Activity {
         this.mode = mode;
     }
 
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
 
     public double getLengthOfRoad() {
         return lengthOfRoad;

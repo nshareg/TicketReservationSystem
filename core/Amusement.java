@@ -6,34 +6,12 @@ public class Amusement extends Activity {
         REGULAR
     }
 
-    private String attraction;
-    private int visitors;
     private core.Amusement.LevelOfAccess requiredAccessLevel;
 
-    public Amusement(String name, String location, Time startTime, Time endTime,
-                     int price, String attraction, int numberOfSeats, core.Amusement.LevelOfAccess requiredAccessLevel) {
-        super(name, location, startTime, endTime, price, numberOfSeats);
-        this.attraction = attraction;
-        this.visitors = 0;
+    public Amusement(String name, String location, String startTime, String endTime, int price, core.Amusement.LevelOfAccess requiredAccessLevel) {
+        super(name, location, new Time(startTime), new Time(endTime), price);
         this.requiredAccessLevel = requiredAccessLevel;
     }
-
-    public String getAttraction() {
-        return attraction;
-    }
-
-    public void setAttraction(String attraction) {
-        this.attraction = attraction;
-    }
-
-    public int getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(int visitors) {
-        this.visitors = visitors;
-    }
-
     public core.Amusement.LevelOfAccess getRequiredAccessLevel() {
         return requiredAccessLevel;
     }

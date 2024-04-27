@@ -1,4 +1,6 @@
 package core;
+import exception.InvalidUserCredentials;
+
 import java.util.ArrayList;
 
 public class User {
@@ -10,7 +12,7 @@ public class User {
     public final String DB_NAME = "passdb.txt";
     public User(){}//empty constructor
 
-    public User(String username, String password,String role, int balance){
+    public User(String username, String password,String role, int balance) throws InvalidUserCredentials{
         this.username = username;
         this.password = password;
         setIfAdmin(role);
@@ -36,9 +38,13 @@ public class User {
     public String getPassword() {
         return this.password;
     }
-    public void setIfAdmin(String role){
+    public void setIfAdmin(String role) throws InvalidUserCredentials {
         if(role.equals("admin")) this.ifAdmin = true;
         if(role.equals("user")) this.ifAdmin = false;
+        else throw new InvalidUserCredentials();
+    }
+    public boolean getRole(){
+        return ifAdmin;
     }
     public String toString(){
         return username + " is a admin " + ifAdmin +" "+ balance;
