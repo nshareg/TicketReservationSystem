@@ -2,8 +2,6 @@ package core;
 
 public class Game extends Activity {
 
-    private int availableSeats;
-
     private int vipSeats;
     private int ordinarySeats;
 

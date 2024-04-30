@@ -1,9 +1,9 @@
 package core;
 public abstract class Activity {
     private String name;
-    private String location;
     private core.Activity.Time startTime;
     private core.Activity.Time endTime;
+    private int availableSeats;
     private int price;
     public static class Time {
         private int hours;
@@ -53,9 +53,8 @@ public abstract class Activity {
             }
         }
     }
-    public Activity(String name, String location, core.Activity.Time startTime, core.Activity.Time endTime, int price) {
+    public Activity(String name,core.Activity.Time startTime, core.Activity.Time endTime, int price) {
         this.name = name;
-        this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
@@ -67,14 +66,6 @@ public abstract class Activity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public core.Activity.Time getStartTime() {

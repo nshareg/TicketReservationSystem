@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class DatabaseWrapper {
     private ArrayList<User> users;
-    private ArrayList<String> activities;
+    private ArrayList<Activity> activities;
     private String filenameOfUsers;
     private String fileNameOfActivities;
     public DatabaseWrapper(String filenameOfUsers, String fileNameOfActivities) {
@@ -21,27 +21,31 @@ public class DatabaseWrapper {
         users = new ArrayList<>();
         activities = new ArrayList<>();
         fillUsers(filenameOfUsers);
-        fillActivities(fileNameOfActivities);}
+        fillActivities(fileNameOfActivities);
+        }
         catch (IOException e) {
             System.out.println("corrupted db of activites");
             System.exit(0);
         }
     }
-    private void fillUsers(String filename) {
+    private void fillUsers(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
             while ((row = reader.readLine()) != null) {
                 String[] elements = row.split(":");
                 try {
                     isValidUser(elements);
-                    users.add(new User(elements[0],elements[1],elements[2], Integer.parseInt(elements[3])));
+                    User temp = new User(elements[0],elements[1],elements[2], Integer.parseInt(elements[3]));
+                    for(int i = 4; i< elements.length; i++){
+                        temp.setActivities(elements[i]);
+                    }
+                    users.add(temp.clone());
+
                 }catch (InvalidUserCredentials e){
                     System.out.println("at line " + row);
                     System.exit(0);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
-            System.err.format("Error reading file: %s%n", e);
         }
     }
     public void isValidUser(String[] arr) throws InvalidUserCredentials{
@@ -51,9 +55,16 @@ public class DatabaseWrapper {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
             while ((row = reader.readLine()) != null) {
-                activities.add(row);
+                activities.add();
                 }
             }
+    }
+    public Activity getActivity(String code){
+        for(Activity codes : activities){
+
+        }
+
+        return null;
     }
     public User getUser(String name){
         for(User user : users){
@@ -67,16 +78,13 @@ public class DatabaseWrapper {
     public boolean ifLogin(String username, String password){
         User temp = getUser(username);
         if(temp == null) return false;
-        return getUser(username).getPassword().equals(password);
+        return temp.getUsername().equals(username) && temp.getPassword().equals(password);
     }
     public int getRowNum(boolean flag){//method which returns number of users in db, if true it givers number of rows for users array, if false for activites
         if(flag) return users.size();
         else return activities.size();
     }
-    public void addNewActivity(String name, String location, String price, String numberOfFreePlaces, String numberOfOccupiedPlaces, String startTime, String endTime){
-        String row = name + "/" + location + "/" + price + "/" + numberOfFreePlaces + "/" + numberOfOccupiedPlaces + "/" + startTime + "/" + endTime;
-        activities.add(row);
-    }
+
     public void close(){
         PrintWriter outputStream = null;
         PrintWriter outputStream2 = null;
@@ -86,9 +94,9 @@ public class DatabaseWrapper {
             for(User user : users){
                 outputStream.println(user.toString());
             }
-            for(String string : activities){
-                outputStream2.println(string);
-            }
+            //for(String string : activities){
+            //    outputStream2.println(string);
+           // }
         } catch(FileNotFoundException e) {
             System.out.println(e.getMessage());
             System.exit(0);

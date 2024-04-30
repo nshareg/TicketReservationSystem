@@ -1,5 +1,6 @@
 package cli;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import core.DatabaseWrapper;
@@ -15,17 +16,15 @@ public class LoginInterface {
             String username = sc.next();
             String password = sc.next();
             if(db.ifLogin(username, password)){
-                System.out.println("Logged in as " + username);
-                cos = db.getUser(username);
+                cos = new User(db.getUser(username));
+                System.out.println(cos);
                 logedIn = true;
+                System.out.println(db.getActivity(cos.getActivities()[0]));
+                System.out.println(Arrays.toString(cos.getActivities()));
             }
             else{
                 System.out.println("Wrong login info");
             }
-        }
-        if(cos.getRole()){
-            System.out.println("Print information about activity");
-            db
         }
     }
 }

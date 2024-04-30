@@ -1,4 +1,4 @@
-vardgez:root:user:4000
+vardgez:root:user:4000:d2rt
 karen:qristine:user:3000
 hakob:areg:user:1990
 edgar:edgar123:user:1500
