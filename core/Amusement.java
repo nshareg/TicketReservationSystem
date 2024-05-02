@@ -1,22 +1,23 @@
 package core;
 
-public class Amusement extends Activity {
-    private enum LevelOfAccess {
-        VIP,
-        REGULAR
-    }
+import static java.lang.Integer.parseInt;
 
+public class Amusement extends Activity {
+    public enum LevelOfAccess {
+        VIP, REGULAR
+    }
     private core.Amusement.LevelOfAccess requiredAccessLevel;
 
-    public Amusement(String name, String location, String startTime, String endTime, int price, core.Amusement.LevelOfAccess requiredAccessLevel) {
-        super(name, location, new Time(startTime), new Time(endTime), price);
-        this.requiredAccessLevel = requiredAccessLevel;
-    }
-    public core.Amusement.LevelOfAccess getRequiredAccessLevel() {
-        return requiredAccessLevel;
-    }
 
-    public void setRequiredAccessLevel(core.Amusement.LevelOfAccess requiredAccessLevel) {
+    public Amusement(String name, int price, String time, LevelOfAccess requiredAccessLevel) {
+        super(name, price, time);
         this.requiredAccessLevel = requiredAccessLevel;
+    }
+    public Amusement(String line){
+        super(line.split("#")[0],parseInt(line.split("#")[1]), line.split("#")[2]);
+        this.requiredAccessLevel = LevelOfAccess.valueOf(line.split("#")[3].toUpperCase());
+    }
+    public String toString(){
+        return getName()+ "#" + getPrice()+ "#" + getStartTime().toString()+ "#" + requiredAccessLevel;
     }
 }

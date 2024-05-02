@@ -1,59 +1,26 @@
 package core;
 
+import static java.lang.Integer.parseInt;
+
 public class Transportation extends Activity {
-    private int lengthOfRoad;
-    private int numberOfSections;
-    private int vipPlaces;
-    private int ordinaryPlaces;
+    private Activity.Time arrivalTime;
+    private int numberOfStops;
+    private int busySeats;
+    private int availableSeats;
 
-    public Transportation(String name, Time startTime, String mode, int price, int numberOfSeats,
-                          int availableSeats, int lengthOfRoad, int numberOfSections, int vipPlaces, int ordinaryPlaces, Time endTime) {
-        super(name, startTime, endTime, price);
-        this.lengthOfRoad = lengthOfRoad;
-        this.numberOfSections = numberOfSections;
-        this.vipPlaces = vipPlaces;
-        this.ordinaryPlaces = ordinaryPlaces;
+    public Transportation(String name, int price, String startTime, String arrivalTime, int numberOfStops, int busySeats, int availableSeats) {
+        super(name, price, startTime);
+        this.arrivalTime = new Time(arrivalTime);
+        this.numberOfStops = numberOfStops;
+        this.busySeats = busySeats;
+        this.availableSeats = availableSeats;
     }
 
-    public String getMode() {
-        return mode;
+    public Transportation(String line){
+        this(line.split("#")[0], parseInt(line.split("#")[1]), line.split("#")[2],
+                line.split("#")[3], parseInt(line.split("#")[4]),parseInt(line.split("#")[5]), parseInt(line.split("#")[6]));
     }
-
-    public void setMode(String mode) {
-        this.mode = mode;
+    public String toString(){
+        return getName()+ "#" + getPrice()+ "#" + getStartTime().toString()+ "#" + arrivalTime.toString()+ "#" + numberOfStops + "#" + busySeats+ "#" + availableSeats;
     }
-
-
-    public double getLengthOfRoad() {
-        return lengthOfRoad;
-    }
-
-    public void setLengthOfRoad(int lengthOfRoad) {
-        this.lengthOfRoad = lengthOfRoad;
-    }
-
-    public int getNumberOfSections() {
-        return numberOfSections;
-    }
-
-    public void setNumberOfSections(int numberOfSections) {
-        this.numberOfSections = numberOfSections;
-    }
-
-    public int getVipPlaces() {
-        return vipPlaces;
-    }
-
-    public void setVipPlaces(int vipPlaces) {
-        this.vipPlaces = vipPlaces;
-    }
-
-    public int getOrdinaryPlaces() {
-        return ordinaryPlaces;
-    }
-
-    public void setOrdinaryPlaces(int ordinaryPlaces) {
-        this.ordinaryPlaces = ordinaryPlaces;
-    }
-
 }

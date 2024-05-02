@@ -32,14 +32,14 @@ public class DatabaseWrapper {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
             while ((row = reader.readLine()) != null) {
-                String[] elements = row.split(":");
+                String[] elements = row.split("#");
                 try {
                     isValidUser(elements);
-                    User temp = new User(elements[0],elements[1],elements[2], Integer.parseInt(elements[3]));
+                    User temp = new User(elements[0],elements[1], Integer.parseInt(elements[3]));
                     for(int i = 4; i< elements.length; i++){
                         temp.setActivities(elements[i]);
                     }
-                    users.add(temp.clone());
+                    users.add(temp);
 
                 }catch (InvalidUserCredentials e){
                     System.out.println("at line " + row);
@@ -55,25 +55,31 @@ public class DatabaseWrapper {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
             while ((row = reader.readLine()) != null) {
-                activities.add();
-                }
+                activities.add(activityGenerator(row));
             }
+        }
+    }
+    private Activity activityGenerator(String row){
+        return switch (row.charAt(0)) {
+            case 'g' -> new Game(row.substring(1));
+            case 'a' -> new Amusement(row.substring(1));
+            case 't' -> new Transportation(row.substring(1));
+            default -> null;
+        };
     }
     public Activity getActivity(String code){
         for(Activity codes : activities){
-
+            if(codes.getName().equals(code)){
+                return codes;
+            }
         }
-
         return null;
     }
     public User getUser(String name){
         for(User user : users){
-            if(user.getUsername().equals(name)) return new User(user);
+            if(user.getUsername().equals(name)) return user;
         }
         return null;
-    }
-    public void addUserActivity(String name, String activity){
-        getUser(name).addActivity(activity);
     }
     public boolean ifLogin(String username, String password){
         User temp = getUser(username);
@@ -94,9 +100,9 @@ public class DatabaseWrapper {
             for(User user : users){
                 outputStream.println(user.toString());
             }
-            //for(String string : activities){
-            //    outputStream2.println(string);
-           // }
+            for(Activity string : activities){
+                outputStream2.println(string);
+            }
         } catch(FileNotFoundException e) {
             System.out.println(e.getMessage());
             System.exit(0);

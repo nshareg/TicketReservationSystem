@@ -3,24 +3,21 @@ package cli;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import core.Core;
 import core.DatabaseWrapper;
 import core.User;
 public class LoginInterface {
     public void execute(){
         Scanner sc = new Scanner(System.in);
-        DatabaseWrapper db = new DatabaseWrapper("passdb.txt","activitydb.txt");
-        User cos = null;
+        Core current = new Core();
         boolean logedIn = false;
         while(!logedIn){
             System.out.println("Please login");
             String username = sc.next();
             String password = sc.next();
-            if(db.ifLogin(username, password)){
-                cos = new User(db.getUser(username));
-                System.out.println(cos);
+            if(current.login(username, password)){
                 logedIn = true;
-                System.out.println(db.getActivity(cos.getActivities()[0]));
-                System.out.println(Arrays.toString(cos.getActivities()));
+                System.out.println(Arrays.toString(current.getUserActivites()));
             }
             else{
                 System.out.println("Wrong login info");

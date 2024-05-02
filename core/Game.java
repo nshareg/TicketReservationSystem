@@ -1,40 +1,23 @@
 package core;
 
+import static java.lang.Integer.parseInt;
+
 public class Game extends Activity {
+    private core.Activity.Time endTime;
+    private int busySeats;
+    private int availableSeats;
 
-    private int vipSeats;
-    private int ordinarySeats;
-
-
-    public Game(String name, String location, String startTime,String endTime, int price,
-                int numberOfSeats, int availableSeats, int vipSeats, int ordinarySeats) {
-        super(name, location, new Time(startTime), new Time(endTime), price);
-        this.vipSeats = vipSeats;
-        this.ordinarySeats = ordinarySeats;
+    public Game(String name, int price, String startTime, String endTime, int busySeats, int availableSeats) {
+        super(name, price, startTime);
+        this.endTime = new Time(endTime);
+        this.busySeats = busySeats;
         this.availableSeats = availableSeats;
     }
-
-    public int getAvailableSeats() {
-        return availableSeats;
+    public Game(String line){
+        this(line.split("#")[0], parseInt(line.split("#")[1]), line.split("#")[2],
+                line.split("#")[3], parseInt(line.split("#")[4]),parseInt(line.split("#")[5]));
     }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
-
-    public int getVipSeats() {
-        return vipSeats;
-    }
-
-    public void setVipSeats(int vipSeats) {
-        this.vipSeats = vipSeats;
-    }
-
-    public int getOrdinarySeats() {
-        return ordinarySeats;
-    }
-
-    public void setOrdinarySeats(int ordinarySeats) {
-        this.ordinarySeats = ordinarySeats;
+    public String toString(){
+        return getName()+ "#" + getPrice()+ "#" + getStartTime().toString()+ "#" + endTime.toString()+ "#" + busySeats+ "#" + availableSeats;
     }
 }

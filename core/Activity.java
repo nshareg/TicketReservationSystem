@@ -1,11 +1,10 @@
 package core;
 public abstract class Activity {
     private String name;
-    private core.Activity.Time startTime;
-    private core.Activity.Time endTime;
-    private int availableSeats;
     private int price;
-    public static class Time {
+    private core.Activity.Time startTime;
+
+    public static class Time{
         private int hours;
         private int minutes;
 
@@ -18,7 +17,10 @@ public abstract class Activity {
             this.hours = Integer.parseInt(timeSpllited[0]);
             this.minutes = Integer.parseInt(timeSpllited[1]);
         }
-
+        public Time(Time obj){
+            this.hours = obj.hours;
+            this.minutes = obj.minutes;
+        }
         public int getHours() {
             return hours;
         }
@@ -35,12 +37,10 @@ public abstract class Activity {
             this.minutes = minutes;
         }
 
-        @Override
         public String toString() {
             return hours + ":" + minutes;
         }
 
-        @Override
         public boolean equals(Object otherObject) {
             if (otherObject == null)
                 return false;
@@ -53,42 +53,21 @@ public abstract class Activity {
             }
         }
     }
-    public Activity(String name,core.Activity.Time startTime, core.Activity.Time endTime, int price) {
+    public Activity(String name, int price, String time) {
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.price = price;
+        this.startTime = new Time(time);
     }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public core.Activity.Time getStartTime() {
-        return new core.Activity.Time(startTime.hours, startTime.minutes);
-    }
-
-    public void setStartTime(core.Activity.Time startTime) {
-        this.startTime = new core.Activity.Time(startTime.hours, startTime.minutes);
-    }
-
-    public core.Activity.Time getEndTime() {
-        return new core.Activity.Time(endTime.hours, endTime.minutes);
-    }
-
-    public void setEndTime(core.Activity.Time endTime) {
-        this.endTime = new core.Activity.Time(endTime.hours, endTime.minutes);
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public Time getStartTime() {
+        return startTime;
     }
+
 }
