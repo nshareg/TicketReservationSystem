@@ -17,7 +17,8 @@ public class LoginInterface {
             String password = sc.next();
             if(current.login(username, password)){
                 logedIn = true;
-                System.out.println(Arrays.toString(current.getUserActivites()));
+                current.register("liverpoolvsbarca");
+                current.logOut();
             }
             else{
                 System.out.println("Wrong login info");

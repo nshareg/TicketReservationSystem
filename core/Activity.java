@@ -2,6 +2,7 @@ package core;
 public abstract class Activity {
     private String name;
     private int price;
+    private int busySeats;
     private core.Activity.Time startTime;
 
     public static class Time{
@@ -40,7 +41,9 @@ public abstract class Activity {
         public String toString() {
             return hours + ":" + minutes;
         }
+        public void increment(){
 
+        }
         public boolean equals(Object otherObject) {
             if (otherObject == null)
                 return false;
@@ -53,10 +56,19 @@ public abstract class Activity {
             }
         }
     }
-    public Activity(String name, int price, String time) {
+
+    public int getBusySeats() {
+        return busySeats;
+    }
+
+    public Activity(String name, int price, int busySeats, String time) {
         this.name = name;
         this.price = price;
+        this.busySeats = busySeats;
         this.startTime = new Time(time);
+    }
+    public void increment(){
+        busySeats++;
     }
     public String getName() {
         return name;

@@ -35,8 +35,8 @@ public class DatabaseWrapper {
                 String[] elements = row.split("#");
                 try {
                     isValidUser(elements);
-                    User temp = new User(elements[0],elements[1], Integer.parseInt(elements[3]));
-                    for(int i = 4; i< elements.length; i++){
+                    User temp = new User(elements[0],elements[1], Integer.parseInt(elements[2]));
+                    for(int i = 3; i< elements.length; i++){
                         temp.setActivities(elements[i]);
                     }
                     users.add(temp);
@@ -47,9 +47,10 @@ public class DatabaseWrapper {
                 }
             }
         }
+
     }
     public void isValidUser(String[] arr) throws InvalidUserCredentials{
-        if(arr.length < 4) throw new InvalidUserCredentials();
+        if(arr.length < 3) throw new InvalidUserCredentials();
     }
     public void fillActivities(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -92,18 +93,30 @@ public class DatabaseWrapper {
     }
 
     public void close(){
-        PrintWriter outputStream = null;
-        PrintWriter outputStream2 = null;
         try {
-            outputStream = new PrintWriter(new FileOutputStream(filenameOfUsers));
-            outputStream2 = new PrintWriter(new FileOutputStream(fileNameOfActivities));
+            PrintWriter outputStream = new PrintWriter(new FileOutputStream(filenameOfUsers));
+            users.trimToSize();
             for(User user : users){
-                outputStream.println(user.toString());
+                outputStream.println(user);
             }
-            for(Activity string : activities){
-                outputStream2.println(string);
-            }
+            outputStream.close();
+
         } catch(FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
+        try {
+            PrintWriter outputStream2 = new PrintWriter(new FileOutputStream(fileNameOfActivities));
+            activities.trimToSize();
+            for(Activity string : activities){
+                String symb = "";
+                if(string.getClass() == Amusement.class) symb = "a";
+                if(string.getClass() == Transportation.class) symb = "t";
+                if(string.getClass() == Game.class) symb = "g";
+                outputStream2.println(symb + string);
+            }
+            outputStream2.close();
+        }catch (FileNotFoundException e){
             System.out.println(e.getMessage());
             System.exit(0);
         }
