@@ -5,14 +5,12 @@ import static java.lang.Integer.parseInt;
 public class Transportation extends Activity {
     private Activity.Time arrivalTime;
     private int numberOfStops;
-    private int busySeats;
     private int availableSeats;
 
     public Transportation(String name, int price, String startTime, String arrivalTime, int numberOfStops, int busySeats, int availableSeats) {
-        super(name, price, startTime);
+        super(name, price, busySeats, startTime);
         this.arrivalTime = new Time(arrivalTime);
         this.numberOfStops = numberOfStops;
-        this.busySeats = busySeats;
         this.availableSeats = availableSeats;
     }
 
@@ -21,6 +19,6 @@ public class Transportation extends Activity {
                 line.split("#")[3], parseInt(line.split("#")[4]),parseInt(line.split("#")[5]), parseInt(line.split("#")[6]));
     }
     public String toString(){
-        return getName()+ "#" + getPrice()+ "#" + getStartTime().toString()+ "#" + arrivalTime.toString()+ "#" + numberOfStops + "#" + busySeats+ "#" + availableSeats;
+        return getName()+ "#" + getPrice()+ "#" + getStartTime().toString()+ "#" + arrivalTime.toString()+ "#" + numberOfStops + "#" + getBusySeats() + "#" + availableSeats;
     }
 }

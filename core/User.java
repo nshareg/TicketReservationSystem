@@ -42,7 +42,7 @@ public class User implements Cloneable{
         return this.password;
     }
     public String toString(){
-        return username + " "+ balance;
+        return username + "#" + password + "#" + balance;
     }
     public void setActivities(String code){
         if(code != null){
