@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 /*
      IMPORTANT NOTE
-     here the row elements are separated with ":"'s, when first element is username, second is password,
+     here the row elements are separated with "#"'s, when first element is username, second is password,
      third one is role of the user, which can be admin or user
      also if it exists we have balance, in the 4th part
 
@@ -35,7 +35,7 @@ public class DatabaseWrapper {
                 String[] elements = row.split("#");
                 try {
                     isValidUser(elements);
-                    User temp = new User(elements[0],elements[1], Integer.parseInt(elements[2]));
+                    User temp = new User(elements[0],elements[1], User.Role.valueOf(elements[2]), Integer.parseInt(elements[3]));
                     for(int i = 3; i< elements.length; i++){
                         temp.setActivities(elements[i]);
                     }
@@ -49,8 +49,14 @@ public class DatabaseWrapper {
         }
 
     }
+    public void setActivity(String row){
+        activities.add(activityGenerator(row));
+    }
+    public Activity[] getActivityDB(){
+        return activities.toArray(new Activity[0]);
+    }
     public void isValidUser(String[] arr) throws InvalidUserCredentials{
-        if(arr.length < 3) throw new InvalidUserCredentials();
+        if(arr.length < 4) throw new InvalidUserCredentials();
     }
     public void fillActivities(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {

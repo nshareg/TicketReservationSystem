@@ -6,6 +6,7 @@ public class Amusement extends Activity {
     public enum LevelOfAccess {
         VIP, REGULAR
     }
+    private LevelOfAccess accessLevel;
 
     public Amusement(String name, int price,int busySeats, String time, LevelOfAccess requiredAccessLevel) {
         super(name, price, busySeats, time);
