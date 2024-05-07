@@ -44,7 +44,7 @@ public class Core {
         return db.getActivityDB();
     }
     public String getUser(){
-        return tempUser.getUsername() + tempUser.getBalance();
+        return tempUser.getUsername()+ "#" + tempUser.getBalance();
     }
     public void setUser(String line){
         try {
