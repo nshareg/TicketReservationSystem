@@ -49,6 +49,11 @@ public class DatabaseWrapper {
         }
 
     }
+    public void setUser(String line) throws InvalidUserCredentials {
+        String[] elements = line.split("#");
+        User temp = new User(elements[0],elements[1], User.Role.valueOf(elements[2]), Integer.parseInt(elements[3]));
+        users.add(temp);
+    }
     public void setActivity(String row){
         activities.add(activityGenerator(row));
     }
