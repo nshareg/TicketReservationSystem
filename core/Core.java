@@ -1,5 +1,7 @@
 package core;
 
+import exception.InvalidDatabaseException;
+
 import java.util.Arrays;
 
 public class Core {
@@ -7,7 +9,7 @@ public class Core {
     private User tempUser;
     private final String USERDB = "passdb.txt";
     private final String ACTIVITYDB = "activitydb.txt";
-    public Core(){
+    public Core() throws InvalidDatabaseException {
         db = new DatabaseWrapper(USERDB, ACTIVITYDB);
     }
     public boolean login(String username, String password){

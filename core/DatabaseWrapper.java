@@ -1,4 +1,5 @@
 package core;
+import exception.InvalidDatabaseException;
 import exception.InvalidUserCredentials;
 import java.io.*;
 import java.util.*;
@@ -14,7 +15,7 @@ public class DatabaseWrapper {
     private ArrayList<Activity> activities;
     private String filenameOfUsers;
     private String fileNameOfActivities;
-    public DatabaseWrapper(String filenameOfUsers, String fileNameOfActivities) {
+    public DatabaseWrapper(String filenameOfUsers, String fileNameOfActivities) throws InvalidDatabaseException {
         try{
         this.filenameOfUsers = filenameOfUsers;
         this.fileNameOfActivities = fileNameOfActivities;
@@ -24,8 +25,7 @@ public class DatabaseWrapper {
         fillActivities(fileNameOfActivities);
         }
         catch (IOException e) {
-            System.out.println("corrupted db of activites");
-            System.exit(0);
+            throw new InvalidDatabaseException();
         }
     }
     private void fillUsers(String filename) throws IOException {
