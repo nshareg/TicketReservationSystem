@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Arrays;
+
 public class Core {
     private DatabaseWrapper db;
     private User tempUser;
@@ -21,6 +23,7 @@ public class Core {
             System.out.println(temp.getBusySeats());
             tempUser.addActivity(activityID);
             temp.increment();
+            tempUser.setBalance(tempUser.getBalance() - temp.getPrice());
             System.out.println(temp.getBusySeats());
             return true;
         }
@@ -29,11 +32,11 @@ public class Core {
         }
     }
     public Activity[] getActivityDB(){//to be added logic, use with this definition
-        //return db.getActivities();
-        return new Activity[3];
+        System.out.println(Arrays.toString(db.getActivityDB()));
+        return db.getActivityDB();
     }
     public String getUser(){
-        return tempUser.toString();
+        return tempUser.getUsername() + tempUser.getBalance();
     }
     public String[] getUserActivites(){
         String[] temp = new String[tempUser.getActivities().length];
@@ -42,6 +45,9 @@ public class Core {
         }
         return temp;
     }
+    public void setNewActivity(String row){
+        db.setActivity(row);
+    }
     public boolean setBalance(int balance){
         if(balance > 0) tempUser.setBalance(balance);
         return balance > 0;
@@ -49,5 +55,8 @@ public class Core {
 
     public void logOut(){
         tempUser = null;
+    }
+    public void exit(){
+        db.close();
     }
 }

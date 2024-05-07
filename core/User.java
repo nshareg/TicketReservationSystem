@@ -5,24 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Cloneable{
+    public enum Role{
+        ADMIN,USER;
+    }
     private String username;
     private String password;
     private int balance;
+    private boolean ifAdmin;
     private ArrayList<String> activities;
     public final String DB_NAME = "passdb.txt";
     public User(){
-       // DatabaseWrapper db = new DatabaseWrapper()
-    }//empty constructor
+    }
 
-    public User(String username, String password, int balance) throws InvalidUserCredentials{
+    public User(String username, String password, Role role, int balance) throws InvalidUserCredentials{
         this.username = username;
         this.password = password;
+        this.ifAdmin = role.equals(Role.ADMIN);
         this.activities = new ArrayList<>();
         setBalance(balance);
     }
     public User(User user){
         this.username = user.username;
         this.password = user.password;
+        this.ifAdmin = user.ifAdmin;
         this.activities = new ArrayList<>(List.of(user.getActivities()));
         this.balance = user.balance;
     }
@@ -42,7 +47,12 @@ public class User implements Cloneable{
         return this.password;
     }
     public String toString(){
-        return username + "#" + password + "#" + balance;
+        return username + "#" + password + "#" + adminGenerator() + "#" + balance;
+    }
+    public String adminGenerator(){
+        if (ifAdmin) return Role.ADMIN.toString();
+        if (!ifAdmin) return Role.USER.toString();
+        return null;
     }
     public void setActivities(String code){
         if(code != null){

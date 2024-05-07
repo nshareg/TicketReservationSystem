@@ -18,7 +18,9 @@ public class LoginInterface {
             if(current.login(username, password)){
                 logedIn = true;
                 current.register("liverpoolvsbarca");
+                current.getActivityDB();
                 current.logOut();
+                current.exit();
             }
             else{
                 System.out.println("Wrong login info");
