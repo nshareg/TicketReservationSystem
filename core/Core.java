@@ -38,6 +38,9 @@ public class Core {
     public String getUser(){
         return tempUser.getUsername() + tempUser.getBalance();
     }
+    public boolean ifUserAdmin(){
+        return tempUser.getIfAdmin();
+    }
     public String[] getUserActivites(){
         String[] temp = new String[tempUser.getActivities().length];
         for (int i = 0; i < temp.length; i++) {

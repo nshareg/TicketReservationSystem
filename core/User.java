@@ -31,6 +31,9 @@ public class User implements Cloneable{
         this.activities = new ArrayList<>(List.of(user.getActivities()));
         this.balance = user.balance;
     }
+    public boolean getIfAdmin(){
+        return ifAdmin;
+    }
     public void addActivity(String activity){
        activities.add(activity);
     }
