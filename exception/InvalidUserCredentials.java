@@ -2,6 +2,9 @@ package exception;
 
 public class InvalidUserCredentials extends Exception {
     public InvalidUserCredentials(){
-        System.out.println("Corrupted user credentials");
+        super("Corrupted user credentials");
+    }
+    public InvalidUserCredentials(String line){
+        super(line);
     }
 }

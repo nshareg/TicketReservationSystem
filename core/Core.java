@@ -1,5 +1,8 @@
 package core;
 
+import exception.InvalidDatabaseException;
+import exception.InvalidUserCredentials;
+
 import java.util.Arrays;
 
 public class Core {
@@ -7,8 +10,13 @@ public class Core {
     private User tempUser;
     private final String USERDB = "passdb.txt";
     private final String ACTIVITYDB = "activitydb.txt";
-    public Core(){
-        db = new DatabaseWrapper(USERDB, ACTIVITYDB);
+    public Core() {
+        try {
+            db = new DatabaseWrapper(USERDB, ACTIVITYDB);
+        }catch (InvalidDatabaseException e){
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
     }
     public boolean login(String username, String password){
         boolean loginFlag = db.ifLogin(username, password);
@@ -37,6 +45,14 @@ public class Core {
     }
     public String getUser(){
         return tempUser.getUsername() + tempUser.getBalance();
+    }
+    public void setUser(String line){
+        try {
+            db.setUser(line);
+        }catch (InvalidUserCredentials e){
+            System.out.println(e.getMessage());
+        }
+
     }
     public boolean ifUserAdmin(){
         return tempUser.getIfAdmin();
