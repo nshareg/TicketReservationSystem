@@ -66,6 +66,18 @@ public class DatabaseWrapper {
     }
 
     /**
+     * Method for checking does there are user having the same username
+     *
+     * @param usernameOfNew String of username to check
+     * @return boolean representation
+     */
+    public boolean ifUserExists(String usernameOfNew){
+        for(User user : users){
+            if(user.getUsername().equals(usernameOfNew)) return true;
+        }
+        return false;
+    }
+    /**
      *  Adding user class object to our instance variable of ArrayList typw
      *
      * @param line String line representing credentials of user delimited with # sign

@@ -96,14 +96,19 @@ public class Core {
     /**
      * method for setting new user, or alternatively registering a new user
      * @param line String representation of all User credentials
+     * @return boolean telling was operation successful or not
      */
-    public void setUser(String line){
+    public boolean setUser(String line){
         try {
-            db.setUser(line);
+            if(db.ifUserExists(line.split("#")[0])){
+                return false;
+            }else{
+                db.setUser(line);
+                return true;
+            }
         }catch (InvalidUserCredentials e){
-            System.out.println(e.getMessage());
+            return false;
         }
-
     }
 
     /**
