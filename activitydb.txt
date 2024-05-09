@@ -1,3 +1,3 @@
-gliverpoolvsbarca#1000#13:30#15:30#30#50
+gliverpoolvsbarca#1000#13:30#15:30#1#50
 alunapark#1000#2#9:0#VIP
-tyerevanmoscow#10000#6:30#18:30#4#100#500
+tyerevanmoscow#10000#6:30#18:30#4#0#500
