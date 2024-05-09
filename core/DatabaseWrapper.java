@@ -15,6 +15,14 @@ public class DatabaseWrapper {
     private ArrayList<Activity> activities;
     private String filenameOfUsers;
     private String fileNameOfActivities;
+
+    /**
+     * Constructor for initializing object with two db names.
+     *
+     * @param filenameOfUsers filename of database of usernames
+     * @param fileNameOfActivities filename of database of activities
+     * @throws InvalidDatabaseException exception warning about difficulties with opening any of the files
+     */
     public DatabaseWrapper(String filenameOfUsers, String fileNameOfActivities) throws InvalidDatabaseException {
         try{
         this.filenameOfUsers = filenameOfUsers;
@@ -28,6 +36,13 @@ public class DatabaseWrapper {
             throw new InvalidDatabaseException();
         }
     }
+
+    /**
+     * Method for creating and placing User class object in our instance variable of ArrayList type
+     *
+     * @param filename name of the file
+     * @throws IOException exception warning about file opening problems
+     */
     private void fillUsers(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
@@ -49,20 +64,53 @@ public class DatabaseWrapper {
         }
 
     }
+
+    /**
+     *  Adding user class object to our instance variable of ArrayList typw
+     *
+     * @param line String line representing credentials of user delimited with # sign
+     * @throws InvalidUserCredentials warns about corrupted credentials
+     */
     public void setUser(String line) throws InvalidUserCredentials {
         String[] elements = line.split("#");
         User temp = new User(elements[0],elements[1], User.Role.valueOf(elements[2]), Integer.parseInt(elements[3]));
         users.add(temp);
     }
+
+    /**
+     * Adds activity class object to our instance of ArrayList class
+     *
+     * @param row string representation of the Activity
+     */
     public void setActivity(String row){
         activities.add(activityGenerator(row));
     }
+
+    /**
+     * returns array of all activities we have
+     *
+     * @return Array of type Activity
+     */
     public Activity[] getActivityDB(){
         return activities.toArray(new Activity[0]);
     }
+
+    /**
+     * Checks if the line with user credentials is valid
+     *
+     * @param arr array of credentials
+     * @throws InvalidUserCredentials warns about corrupted line
+     */
     public void isValidUser(String[] arr) throws InvalidUserCredentials{
         if(arr.length < 4) throw new InvalidUserCredentials();
     }
+
+    /**
+     * Fills instance ArrayList of activities with respective objects
+     *
+     * @param filename filename of database
+     * @throws IOException exception warning about difficulties opening the file
+     */
     public void fillActivities(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String row;
@@ -71,6 +119,13 @@ public class DatabaseWrapper {
             }
         }
     }
+
+    /**
+     * Creates object of class Activity from string
+     *
+     * @param row String with information about activity
+     * @return object of class Activity
+     */
     private Activity activityGenerator(String row){
         return switch (row.charAt(0)) {
             case 'g' -> new Game(row.substring(1));
@@ -79,6 +134,12 @@ public class DatabaseWrapper {
             default -> null;
         };
     }
+
+    /**
+     * returns activity by name
+     * @param code name of the activity
+     * @return object of class Activity
+     */
     public Activity getActivity(String code){
         for(Activity codes : activities){
             if(codes.getName().equals(code)){
@@ -87,22 +148,36 @@ public class DatabaseWrapper {
         }
         return null;
     }
+
+    /**
+     * Returns object of class User by its username
+     *
+     * @param name username of User
+     * @return object of class User
+     */
     public User getUser(String name){
         for(User user : users){
             if(user.getUsername().equals(name)) return user;
         }
         return null;
     }
+
+    /**
+     * Method for checking if there are object of User class with respective login and password
+     *
+     * @param username username of User
+     * @param password password of User
+     * @return boolean about if login was successful or not
+     */
     public boolean ifLogin(String username, String password){
         User temp = getUser(username);
         if(temp == null) return false;
         return temp.getUsername().equals(username) && temp.getPassword().equals(password);
     }
-    public int getRowNum(boolean flag){//method which returns number of users in db, if true it givers number of rows for users array, if false for activites
-        if(flag) return users.size();
-        else return activities.size();
-    }
 
+    /**
+     * Method for closing the DW object, by writing all the objects to their databases by calling their toString method
+     */
     public void close(){
         try {
             PrintWriter outputStream = new PrintWriter(new FileOutputStream(filenameOfUsers));
