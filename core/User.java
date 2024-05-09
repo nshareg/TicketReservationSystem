@@ -91,7 +91,11 @@ public class User implements Cloneable{
      * @return String representation of the user
      */
     public String toString(){
-        return username + "#" + password + "#" + adminGenerator() + "#" + balance;
+        String result = username + "#" + password + "#" + adminGenerator() + "#" + balance;
+        for(String activityID : activities){
+            result += "#" + activityID;
+        }
+        return result;
     }
 
     /**
