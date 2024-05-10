@@ -18,10 +18,7 @@ public class LoginInterface {
             if(current.login(username, password)){
                 logedIn = true;
                 current.register("liverpoolvsbarca");
-                current.register("liverpoolvsbarca");
-                System.out.println(Arrays.toString(current.getUserActivites()));
-                System.out.println(current.removeActivityByAdmin("liverpoolvsbarca"));
-                System.out.println(Arrays.toString(current.getUserActivites()));
+                current.getActivityDB();
                 current.logOut();
                 current.exit();
             }

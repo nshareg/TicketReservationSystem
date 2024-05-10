@@ -60,6 +60,7 @@ public class RegistrationPage extends JFrame {
                     "USER#0")){
                 JOptionPane.showMessageDialog(f, "Registered Successfully!!!",
                         "Registration", JOptionPane.INFORMATION_MESSAGE);
+                core.login(username.getText(), pass);
                 MenuPage page = new MenuPage(core);
                 page.setLocationRelativeTo(null);
                 page.setVisible(true);

@@ -1,9 +1,9 @@
-vardgez#root#USER#0#liverpoolvsbarca#liverpoolvsbarca#liverpoolvsbarca
+vardgez#root#USER#1000
 karen#qristine#ADMIN#3000
 hakob#areg#USER#1990
 edgar#edgar123#ADMIN#1500
 vzgo#svaxchi#USER#3000
-partez#partez#ADMIN#3000
+partez#partez#ADMIN#1000
 xatuba#xatuba#ADMIN#2000
 vlad#vlad#USER#2000#2000
 vacok#vacok#USER#2999

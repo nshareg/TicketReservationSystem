@@ -1,4 +1,4 @@
-vardgez#root#USER#0
+vardgez#root#USER#1000
 karen#qristine#ADMIN#3000
 hakob#areg#USER#1990
 edgar#edgar123#ADMIN#1500
