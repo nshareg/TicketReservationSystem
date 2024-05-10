@@ -20,7 +20,7 @@ public class LoginInterface {
                 current.register("liverpoolvsbarca");
                 current.register("liverpoolvsbarca");
                 System.out.println(Arrays.toString(current.getUserActivites()));
-                System.out.println(current.removeActivity("liverpoolvsbarca"));
+                System.out.println(current.removeActivityByAdmin("liverpoolvsbarca"));
                 System.out.println(Arrays.toString(current.getUserActivites()));
                 current.logOut();
                 current.exit();

@@ -151,11 +151,22 @@ public class Core {
         }
         return false;
     }
-    public void removeActivityByAdmin(String ID){
-        for(int i = 0; i < db.getLength(true); i++){
-            User temp = db.getUser(i);
-            db.getActivity(ID).decrement(temp.deleteAllRegistrationOccurrences(ID));
+
+    /**
+     * Method for admin users to delete some available activity
+     * and by that also remove them from all the registered places
+     * @param ID name of the activity
+     * @return boolean warning about does the user has the admin privileges or not
+     */
+    public boolean removeActivityByAdmin(String ID){
+        if(tempUser.getIfAdmin()){
+            for(int i = 0; i < db.getLength(true); i++){
+                User temp = db.getUser(i);
+                db.getActivity(ID).decrement(temp.deleteAllRegistrationOccurrences(ID));
+            }
+            return true;
         }
+        return false;
     }
     /**
      * Method for detach current reference of tempUser
