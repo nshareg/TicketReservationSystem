@@ -1,10 +1,10 @@
-vardgez#root#USER#0
+vardgez#root#USER#0#liverpoolvsbarca
 karen#qristine#ADMIN#3000
 hakob#areg#USER#1990
 edgar#edgar123#ADMIN#1500
 vzgo#svaxchi#USER#3000
 partez#partez#ADMIN#3000
 xatuba#xatuba#ADMIN#2000
-vlad#vlad#USER#2000
+vlad#vlad#USER#2000#2000
 vacok#vacok#USER#2999
 areg#areg#USER#2000

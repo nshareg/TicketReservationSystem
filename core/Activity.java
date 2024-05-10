@@ -70,6 +70,9 @@ public abstract class Activity {
     public void increment(){
         busySeats++;
     }
+    public void decrement(int n){
+        busySeats -= n;
+    }
     public String getName() {
         return name;
     }

@@ -48,11 +48,9 @@ public class Core {
     public boolean register(String activityID){
         Activity temp = db.getActivity(activityID);
         if(temp.getPrice() <= tempUser.getBalance()){
-            System.out.println(temp.getBusySeats());
             tempUser.addActivity(activityID);
             temp.increment();
             tempUser.setBalance(tempUser.getBalance() - temp.getPrice());
-            System.out.println(temp.getBusySeats());
             return true;
         }
         else{
@@ -67,7 +65,6 @@ public class Core {
     public Activity[] getActivityDB(){
         return db.getActivityDB();
     }
-
     /**
      * return User class object Username and balance, for usages in GUI
      *
@@ -125,13 +122,11 @@ public class Core {
      * @return Array of strings
      */
     public String[] getUserActivites(){
-        String[] temp = new String[tempUser.getActivities().length];
-        for (int i = 0; i < temp.length; i++) {
-            temp[i] = db.getActivity(tempUser.getActivities()[i]).toString();
-        }
-        return temp;
+        return tempUser.getActivities();
     }
-
+    public String getActivity(String name){
+        return db.getActivity(name).toString();
+    }
     /**
      * Calling respective method of the DW
      * @param row String with representation of activity details
@@ -149,7 +144,19 @@ public class Core {
         if(balance > 0) tempUser.setBalance(balance);
         return balance > 0;
     }
-
+    public boolean removeActivity(String ID){
+        if(tempUser.deleteRegistration(ID)){
+            db.getActivity(ID).decrement(1);
+            return true;
+        }
+        return false;
+    }
+    public void removeActivityByAdmin(String ID){
+        for(int i = 0; i < db.getLength(true); i++){
+            User temp = db.getUser(i);
+            db.getActivity(ID).decrement(temp.deleteAllRegistrationOccurrences(ID));
+        }
+    }
     /**
      * Method for detach current reference of tempUser
      */

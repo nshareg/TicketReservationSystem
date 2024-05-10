@@ -2,6 +2,7 @@ package core;
 import exception.InvalidUserCredentials;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User implements Cloneable{
@@ -91,7 +92,11 @@ public class User implements Cloneable{
      * @return String representation of the user
      */
     public String toString(){
-        return username + "#" + password + "#" + adminGenerator() + "#" + balance;
+        String result = username + "#" + password + "#" + adminGenerator() + "#" + balance;
+        for(String activityID : activities){
+            result += "#" + activityID;
+        }
+        return result;
     }
 
     /**
@@ -131,7 +136,25 @@ public class User implements Cloneable{
             return username && password;
         }
     }
-
+    public boolean deleteRegistration(String activityID){
+        for(String ID : activities){
+            if(ID.equals(activityID)){
+                activities.remove(ID);
+                return true;
+            }
+        }
+        return false;
+    }
+    public int deleteAllRegistrationOccurrences(String activityID){
+        int num = 0;
+        for(String ID :activities){
+            if(ID.equals(activityID)){
+                num++;
+            }
+        }
+        activities.removeAll(Collections.singleton(activityID));
+        return num;
+    }
     /**
      * Method for getting all activities User is registered for
      * @return Array of Strings with names of each activity

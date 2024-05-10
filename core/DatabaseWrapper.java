@@ -51,7 +51,7 @@ public class DatabaseWrapper {
                 try {
                     isValidUser(elements);
                     User temp = new User(elements[0],elements[1], User.Role.valueOf(elements[2]), Integer.parseInt(elements[3]));
-                    for(int i = 3; i< elements.length; i++){
+                    for(int i = 4; i< elements.length; i++){
                         temp.setActivities(elements[i]);
                     }
                     users.add(temp);
@@ -173,6 +173,9 @@ public class DatabaseWrapper {
         }
         return null;
     }
+    public User getUser(int index){
+        return users.get(index);
+    }
 
     /**
      * Method for checking if there are object of User class with respective login and password
@@ -185,6 +188,12 @@ public class DatabaseWrapper {
         User temp = getUser(username);
         if(temp == null) return false;
         return temp.getUsername().equals(username) && temp.getPassword().equals(password);
+    }
+
+
+    public int getLength(boolean flag){//if true returns number of users, else returns number of activites
+        if(flag) return users.size();
+        else return activities.size();
     }
 
     /**
